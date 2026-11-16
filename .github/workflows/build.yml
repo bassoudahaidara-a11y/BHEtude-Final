@@ -35,8 +35,18 @@ jobs:
         with:
           gradle-version: '8.11.1'
 
+      - name: Build APK
+        run: gradle assembleDebug --no-daemon
+
       - name: Build AAB
         run: gradle bundleRelease --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: BH-Etude-Final-APK
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
